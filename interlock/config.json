@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "stages": [
+    { "id": "implement", "label": "Implement",
+      "match": { "tool": ["Write", "Edit", "MultiEdit", "NotebookEdit"] } },
+    { "id": "run-crew", "label": "Run the crew",
+      "match": { "toolInput": { "Bash": "\\b(crewai run|uv run (run_crew|code_extractor_crew|replay|train)|run_crew|code_extractor_crew)\\b" } } },
+    { "id": "verify", "label": "Verify",
+      "match": { "toolInput": { "Bash": "\\b(crewai test|uv run test|pytest|python -m pytest|ruff|mypy)\\b" } } }
+  ],
+  "categories": [
+    { "id": "plan", "match": { "prompt": ["\\b(plan|design|approach|trade-?offs?|architecture)\\b"],
+                               "toolsAbsent": ["Write", "Edit", "MultiEdit", "NotebookEdit"] } },
+    { "id": "fix", "match": { "prompt": ["\\b(fix|bug|broken|error|fail(s|ed|ing)?|crash)\\b"],
+                              "tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"] } },
+    { "id": "implement", "match": { "tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"] } },
+    { "id": "explain", "match": { "prompt": ["\\b(explain|what does|how does|why does|walk me through)\\b"],
+                                  "toolsAbsent": ["Write", "Edit", "MultiEdit", "NotebookEdit"] } }
+  ]
+}

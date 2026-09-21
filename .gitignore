@@ -1,2 +1,5 @@
 .env
 __pycache__/
+
+# interlock: per-machine telemetry settings, never committed
+.claude/settings.local.json
