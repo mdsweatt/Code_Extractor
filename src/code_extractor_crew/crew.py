@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai_tools import DirectoryReadTool, FileReadTool
 from crewai.knowledge.source.pdf_knowledge_source import PDFKnowledgeSource
@@ -5,6 +7,10 @@ from crewai.project import CrewBase, agent, crew, task
 llm_google = LLM(model="gemini/gemini-1.5-pro",  temperature=0.7)
 llm_openai = LLM(model="gpt-4o-mini", temperature=0.7)
 llm_local = LLM(model="ollama/deepseek-r1:14b", base_url="http://localhost:11434")
+
+# Repo root is three levels up: src/code_extractor_crew/crew.py -> repo
+REPO_ROOT = Path(__file__).resolve().parents[2]
+CODE_REPOSITORY = REPO_ROOT / "code_repository"
 
 
 @CrewBase
@@ -14,7 +20,7 @@ class CodeExtractorCrew():
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
 	# Instantiate tools
-	docs_tool = DirectoryReadTool(directory='/Users/mdsweatt/Documents/Pycharm_Projects/Code_Extractor_Crew/code_repository')
+	docs_tool = DirectoryReadTool(directory=str(CODE_REPOSITORY))
 	file_tool = FileReadTool()
 
 	pdf_knowledge_source = PDFKnowledgeSource(
@@ -76,7 +82,6 @@ class CodeExtractorCrew():
 	def analyze_control_flow(self) -> Task:
 		return Task(
 			config=self.tasks_config['analyze_control_flow'],
-			output_file='report.md'
 		)
 
 	@task
@@ -89,7 +94,6 @@ class CodeExtractorCrew():
 	def synthesize_requirements(self) -> Task:
 		return Task(
 			config=self.tasks_config['synthesize_requirements'],
-			output_file='report.md'
 		)
 
 	@task
