@@ -3,3 +3,6 @@ __pycache__/
 
 # interlock: per-machine telemetry settings, never committed
 .claude/settings.local.json
+
+# skill eval workspace
+.claude/skills/code-to-requirements-workspace/

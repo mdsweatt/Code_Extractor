@@ -1,0 +1,74 @@
+{
+  "skill_name": "code-to-requirements",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Reverse-engineer the requirements from the C program in code_repository/BasicGame.c. I want functional and non-functional requirements that are traceable back to the code. Put the output files in OUTDIR.",
+      "expected_output": "A requirements document (plus supporting analysis files) where every requirement cites a file/function/line, uses EARS phrasing, contains no invented numeric limits, reflects that seed() and getValidInteger() are never called, and includes a function-level traceability matrix.",
+      "files": [
+        "code_repository/BasicGame.c"
+      ],
+      "assertions": [
+        "Produced at least one markdown requirements document",
+        "Contains at least 10 requirement statements (shall/must)",
+        "At least 90% of requirement statements cite a source line number (and file, for multi-file inputs)",
+        "No weak/unmeasurable words in requirement statements",
+        "No requirements about the requirements document itself",
+        "Requirement statements do not embed function identifiers like foo()",
+        "No invented timing constraints (code has none)",
+        "Notes that seed() is never called / RNG is unseeded",
+        "Notes that getValidInteger() is never called",
+        "Captures the 200-point checkout end condition",
+        "Final document traces all 22 functions (each name appears)",
+        "Validated doc includes a traceability matrix section"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Generate a requirements spec for the Arduino sketch at Reports/Battery-Management-System-master/BMS.ino so a firmware engineer could re-implement it. Write the outputs to OUTDIR.",
+      "expected_output": "Requirements covering the SOC and SOH calculations with the actual formulas and constants (Ro, capacity), the analog pin reads, the delay-based timing, EEPROM persistence, pin/I2C constants as interface or constraint requirements, and explicit handling of BatteryManagement(), updates() and overcurrent() being defined but never called.",
+      "files": [
+        "Reports/Battery-Management-System-master/BMS.ino"
+      ],
+      "assertions": [
+        "Produced at least one markdown requirements document",
+        "Contains at least 10 requirement statements (shall/must)",
+        "At least 90% of requirement statements cite a source line number (and file, for multi-file inputs)",
+        "No weak/unmeasurable words in requirement statements",
+        "No requirements about the requirements document itself",
+        "Requirement statements do not embed function identifiers like foo()",
+        "Notes BatteryManagement() is never called",
+        "Notes updates() is never called",
+        "Identifies overcurrent() as an interrupt handler",
+        "Captures capacity constant 4.5*3600 (16200 C)",
+        "Captures Ro = 1e-3",
+        "Captures I2C address 0x18 and pins 2 and 7",
+        "Captures the SOC formula (1 - Q/capacity)*100",
+        "Captures the 4.11 V SOH threshold",
+        "Captures EEPROM persistence of SOC, SOH, Q",
+        "Captures the 10000 ms delay in overcurrent()"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "There are six small C exercise programs in Reports/Random_Code/Code. Extract the requirements each one implements. Save everything under OUTDIR.",
+      "expected_output": "Per-program requirements (six mains with the same name), each traced to its own file, covering the dynamic allocation behavior (malloc/calloc/realloc), the fixed element counts, and stdin/stdout formats, without merging the programs into one system.",
+      "files": [
+        "Reports/Random_Code/Code/"
+      ],
+      "assertions": [
+        "Produced at least one markdown requirements document",
+        "Contains at least 10 requirement statements (shall/must)",
+        "At least 90% of requirement statements cite a source line number (and file, for multi-file inputs)",
+        "No weak/unmeasurable words in requirement statements",
+        "No requirements about the requirements document itself",
+        "Requirement statements do not embed function identifiers like foo()",
+        "No invented timing constraints (code has none)",
+        "Final document cites all six program files",
+        "Attributes malloc to problem1, calloc to problem3, realloc to problem4",
+        "Notes the out-of-bounds hazard in problem5/6 (n=15 but realloc to 10)",
+        "Notes problem1 prints an uninitialized/indeterminate value"
+      ]
+    }
+  ]
+}
